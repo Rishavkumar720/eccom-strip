@@ -38,3 +38,23 @@ DB_HOST=localhost
 DB_PORT=5432
 STRIPE_PUBLIC_KEY=pk_test_51SEBuJDCf7tqmI333x8cHmM4SKzyH4M9PxwTUi2jhbiSCw1cDhaReoWWvybj1zeZGiHlBbyc69eKZfJKKY3rSSYE00pQ1HTuCX
 STRIPE_SECRET_KEY=*k_test_51SEBuJDCf7tqmI33Y1mGcmyYc1RxP48hvyjb0uZEDsXD3KV3O8v9poTIq5KgM8dXCHArmWo6P7pDx2XayL2nrpXG00fdnX0cbS
+
+
+
+AI Tools Used
+- ChatGPT (GPT-5) for generating project guidance, folder structure, `.env` templates, and README content.  
+- AI was used to suggest Git workflows, setup instructions, and handling Stripe payment flows.
+- and also used to learn about stip and postgral
+
+
+
+
+ime Spent
+- Total hours actually spent: 10 hours
+- 5 haour i used to code
+-5 hour used to understand the concept abou strip and postgral
+
+github link
+https://github.com/Rishavkumar720/eccom-strip
+
+
