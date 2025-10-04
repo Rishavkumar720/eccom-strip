@@ -1,63 +1,40 @@
-# eccom-strip
-This is a simple Django web app using PostgreSQL and Stripe Checkout (in test mode).
-The home page displays three fixed ice cream products. A user can enter quantities, click Buy, complete a Stripe test payment, and then see their paid order listed on the same page.
+# Icecream Shop
 
-Project Overview
+## Assumptions
+- The project assumes a simple online ice cream shop where users can browse products and make purchases.  
+- User authentication is not implemented; anonymous checkout is allowed.  
+- Stripe is used for payment processing.
 
-Built with Django 5 and PostgreSQL.
+## Flow Chosen
+- **Checkout Session Flow** is used instead of Payment Intents for simplicity.  
+- This flow handles one-time payments easily and provides Stripe-hosted checkout pages.  
 
-Uses Stripe Checkout for payments (test mode only).
+## Avoiding Double Charge / Inconsistent State
+- Orders are created only after successful Stripe payment webhook confirmation.  
+- Webhook handler updates order status and prevents multiple charges.  
+- Idempotency keys are used in Stripe requests to prevent repeated payment creation.  
 
-Displays three fixed products:
+## Setup / Run Steps
 
-Vanilla Ice Cream ($5.00)
+### 1. Clone the repository
+```bash
+git clone https://github.com/Rishavkumar720/eccom-strip.git
+cd eccom-strip
 
-Chocolate Ice Cream ($6.00)
+2. Create and activate virtual environment
+python -m venv venv
+source venv/Scripts/activate
 
-Strawberry Ice Cream ($5.50)
 
-After successful payment, the order appears under "My Orders" on the same page.
+env.example
 
-Prevents double charge or inconsistent state by verifying Stripe session before marking an order as paid.
-
-Assumptions
-
-Each user can view and buy products without authentication.
-
-Products are fixed and manually inserted into the database once.
-
-Stripe Checkout is used for simplicity and reliability (instead of Payment Intents).
-
-Orders are verified through Stripe before being marked as paid.
-
-Flow Description
-
-The home page (/) shows all products and a form to select quantities.
-
-When the user clicks Buy, a Stripe Checkout Session is created.
-
-Stripe handles the payment securely.
-
-Upon success, Stripe redirects the user to /success/ with a session ID.
-
-The app verifies the session with Stripe and marks the order as paid.
-
-The user is redirected back to the home page where their paid order appears.
-
-Why Stripe Checkout
-
-Stripe Checkout was chosen over Payment Intents because:
-
-It provides a prebuilt, secure payment flow.
-
-It reduces frontend complexity.
-
-It automatically handles test cards, errors, and redirects.
-
-Preventing Double Charge
-
-Each order is linked to a unique Stripe session ID.
-
-Before marking an order as paid, the app verifies payment status directly with Stripe.
-
-If a page refresh or double submit occurs, no new session is created if payment is already completed.
+SECRET_KEY=your_django_secret_key
+DEBUG=True
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=icecream_db
+DB_USER=postgras
+DB_PASSWORD=12345
+DB_HOST=localhost
+DB_PORT=5432
+STRIPE_PUBLIC_KEY=pk_test_51SEBuJDCf7tqmI333x8cHmM4SKzyH4M9PxwTUi2jhbiSCw1cDhaReoWWvybj1zeZGiHlBbyc69eKZfJKKY3rSSYE00pQ1HTuCX
+STRIPE_SECRET_KEY=*k_test_51SEBuJDCf7tqmI33Y1mGcmyYc1RxP48hvyjb0uZEDsXD3KV3O8v9poTIq5KgM8dXCHArmWo6P7pDx2XayL2nrpXG00fdnX0cbS
